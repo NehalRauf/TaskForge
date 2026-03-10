@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: taskforge-worker
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000ms
+
+server:
+  port: ${SERVER_PORT:8081}
+
+taskforge:
+  worker:
+    id: ${WORKER_ID:worker-1}
+    api-base-url: ${API_BASE_URL:http://localhost:8080}
+    poll-timeout-seconds: 5
+    concurrency: ${WORKER_CONCURRENCY:2}
+  queue:
+    high: "queue:high"
+    normal: "queue:normal"
+    low: "queue:low"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

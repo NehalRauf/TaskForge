@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: taskforge-api
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/${POSTGRES_DB:taskforge}
+    username: ${POSTGRES_USER:taskforge}
+    password: ${POSTGRES_PASSWORD:taskforge}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000ms
+
+server:
+  port: 8080
+
+taskforge:
+  queue:
+    high: "queue:high"
+    normal: "queue:normal"
+    low: "queue:low"
+    dlq: "queue:dlq"
+  job:
+    max-retries: 3
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
